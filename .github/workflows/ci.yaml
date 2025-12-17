@@ -17,7 +17,7 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v4
         with: 
-        python-version: ${{steps.python}}
+          python-version: ${{steps.python}}
       - name: upgrade pip
         run: python -m pip install --updgrade setuptools wheel
       - name: install project dependencies
@@ -31,4 +31,5 @@ jobs:
         with:
           name: ml-artificats-${{setup.python}}-${{github.run_id}}
           path: artificats
+
 
