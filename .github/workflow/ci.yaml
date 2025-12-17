@@ -1,0 +1,33 @@
+name: CI - Train and save the model
+on: 
+  push:
+    branches: [main]
+  pull_requests:
+    branches: [main]
+jobs:
+  steps:
+    name: train and save the model
+    runs-on: ubuntu-latest
+    strategy:
+      steps:
+        python: [3.11, 3.12]
+steps:
+  - name: checkout
+    uses: actions/checkout@v4
+  - name: setup python
+    uses: actions/setup-python@v4
+    with: 
+      python-version: ${{steps.python}}
+  - name: upgrade pip
+    run: python -m pip install --updgrade setuptools wheel
+  - name: install project dependencies
+    run: python -m pip install -r requirements.txt
+  - name: train the model
+    run: |
+      python train.py
+      ls -la artificats
+  - name: upload artificats
+    uses: actions/upload-artificat@v4
+    with:
+      name: ml-artificats-${{setup.python}}-${{github.run_id}}
+      path: artificats
